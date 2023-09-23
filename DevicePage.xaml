@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeyondBatteries.DevicePage"
+             Title="DevicePage">
+    <VerticalStackLayout Margin="30" >
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label
+                    Text="Solltemperatur: "
+                    />
+                <Label
+                    x:Name="SollTempText"
+                    Text=""
+                    />
+            </HorizontalStackLayout>
+            <Stepper
+            x:Name="SollTempStepper"
+            Minimum="10"
+            Maximum="30"
+            Value="21"
+            ValueChanged="Stepper_Value"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" Padding="20">
+                <Label
+                    Text="Isttemperatur: "
+                    />
+                <Label
+                    x:Name="IstTempText"
+                    Text=""
+                    />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label 
+                    Text="Fensterstatus: "/>
+                <Label
+                    x:Name="FensterStatus"
+                    Text=""
+                    />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label 
+                    Text="Thermostatstatus: "/>
+                <Label
+                    x:Name="ThermostatStatus"
+                    Text=""
+                    />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+</ContentPage>
