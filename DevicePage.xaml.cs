@@ -1,4 +1,3 @@
-using Java.Lang;
 using System.Text;
 using Plugin.BLE.Abstractions.Contracts;
 using System.Diagnostics;
@@ -26,10 +25,6 @@ public partial class DevicePage : ContentPage
             var characteristic3 = await service.GetCharacteristicAsync(Guid.Parse(BleConfiguration.characteristic_fensterStatus));
             var characteristic4 = await service.GetCharacteristicAsync(Guid.Parse(BleConfiguration.characteristic_thermostatStatus));
 
-            Debug.WriteLine("Characteristic : " + characteristic.StringValue);
-            Debug.WriteLine("Characteristic2: " + characteristic2.StringValue);
-            Debug.WriteLine("Characteristic3: " + characteristic3.StringValue);
-            Debug.WriteLine("Characteristic4: " + characteristic4.StringValue);
         }
         catch
         {
