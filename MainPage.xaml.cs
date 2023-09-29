@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices.ObjectiveC;
 using System.Threading.Tasks;
 
@@ -20,25 +21,40 @@ namespace BeyondBatteries
         {
             InitializeComponent();
             _bluetoothAdapter = CrossBluetoothLE.Current.Adapter;
+
             _bluetoothAdapter.DeviceDiscovered += async (sender, foundBleDevice) =>
             {
-                if (foundBleDevice != null && !string.IsNullOrEmpty(foundBleDevice.Device.Name) && foundBleDevice.Device.ToString() == BleConfiguration.device_name)
+                 
+                if (foundBleDevice != null && !string.IsNullOrEmpty(foundBleDevice.Device.Name))
                 {
+                    if (!foundBleDevice.Device.Name.StartsWith("Beyond-Battery"))
+                    {
+                        return;
+                    }
                     _gattDevices.Add(foundBleDevice.Device);
                     IsBusyIndicator.IsVisible = IsBusyIndicator.IsRunning = !(BLEConnect.IsEnabled = true);
                     await _bluetoothAdapter.StopScanningForDevicesAsync();
                     action = await DisplayActionSheet("Choose device", "Cancel", null, foundBleDevice.Device.Name);
-                    
+
                     if (action == foundBleDevice.Device.Name)
                     {
                         _connectedDevice = foundBleDevice.Device;
-                        
-                        var connectParameters = new ConnectParameters(false, true);
-                        await _bluetoothAdapter.ConnectToDeviceAsync(_connectedDevice, connectParameters);
-                        await Navigation.PushAsync(new DevicePage(_connectedDevice));
+
+                        if (_connectedDevice.State == DeviceState.Connected)
+                        {
+                            await Navigation.PushAsync(new DevicePage(foundBleDevice.Device));
+                        }
+                        else
+                        {
+                            var connectParameters = new ConnectParameters(false, true);
+                            await _bluetoothAdapter.ConnectToDeviceAsync(_connectedDevice, connectParameters);
+
+                            await Navigation.PushAsync(new DevicePage(_connectedDevice));
+                        }
+
                     }
                 }
-                    
+            
             };
         }
 
@@ -99,13 +115,14 @@ namespace BeyondBatteries
 
             if(!_bluetoothAdapter.IsScanning)
             {
+                var scanFilterOptions = new ScanFilterOptions();
+                scanFilterOptions.ServiceUuids = new[] { Guid.Parse(BleConfiguration.service_guid) }; 
                 await _bluetoothAdapter.StartScanningForDevicesAsync();
             }
-            /*
+            
             foreach (var device in _bluetoothAdapter.ConnectedDevices)
                 _gattDevices.Add(device);
-            */
-            //string 
+
             foundBleDevicesListView.ItemsSource = _gattDevices.ToArray();
             IsBusyIndicator.IsVisible = IsBusyIndicator.IsRunning = !(BLEConnect.IsEnabled = true);
 

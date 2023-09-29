@@ -4,23 +4,24 @@
              x:Class="BeyondBatteries.DevicePage"
              Title="DevicePage">
     <VerticalStackLayout Margin="30" >
+        
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label
                     Text="Solltemperatur: "
                     />
                 <Label
                     x:Name="SollTempText"
-                    Text=""
+                    Text="21"
                     />
             </HorizontalStackLayout>
             <Stepper
-            x:Name="SollTempStepper"
-            Minimum="10"
-            Maximum="30"
-            Value="21"
-            ValueChanged="Stepper_Value"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
+                x:Name="SollTempStepper"
+                Minimum="10"
+                Maximum="30"
+                Value="21"
+                ValueChanged="Stepper_Value"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
 
             <HorizontalStackLayout HorizontalOptions="Center" Padding="20">
                 <Label
@@ -35,17 +36,17 @@
                 <Label 
                     Text="Fensterstatus: "/>
                 <Label
-                    x:Name="FensterStatus"
+                    x:Name="FensterStatusText"
                     Text=""
                     />
             </HorizontalStackLayout>
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Label 
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label 
                     Text="Thermostatstatus: "/>
-                <Label
-                    x:Name="ThermostatStatus"
+            <Label
+                    x:Name="ThermostatStatusText"
                     Text=""
                     />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>
